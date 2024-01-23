@@ -1,57 +1,47 @@
-# ruffle-selfhosted
+# ruffle-extension
 
-ruffle-selfhosted is the intended way to get Ruffle onto your website.
+ruffle-extension is all of the power of Ruffle, in your browser.
 
-You may either include it and forget about it, and we will polyfill existing Flash content,
-or use our APIs for custom configurations or more advanced usages of the Ruffle player.
+Without needing websites to do anything, the browser extension automatically replaces any Flash content on websites with the Ruffle player.
 
-## Using ruffle-selfhosted
+It automatically negotiates with websites that do have Ruffle installed, to ensure that there is no conflict between the versions. Newer version of ruffle, either from the website or extension, will always take precedence and disable the other.
 
-For more examples and in-depth documentation on how to use Ruffle on your website, please
-[check out our wiki](https://github.com/ruffle-rs/ruffle/wiki/Using-Ruffle#web).
+## Using ruffle-extension
 
-### Host Ruffle
+The browser extension works in Chrome, Firefox, and Safari 14+. It can be installed directly from the [Chrome Web Store](https://chromewebstore.google.com/detail/ruffle-flash-emulator/donbcfbmhbcapadipfkeojnmajbakjdc) or [Firefox Add-ons site](https://addons.mozilla.org/firefox/addon/ruffle_rs). 
+Or to install it manually, you can either download the [latest release](https://github.com/ruffle-rs/ruffle/releases) or [build it yourself](../../README.md), then follow the instructions below.
 
-The `selfhosted` package is configured for websites that do not use bundlers or npm and just want
-to get up and running. If you'd prefer to use Ruffle through npm and a bundler, please 
-[refer to ruffle core](https://github.com/ruffle-rs/ruffle/tree/master/web/packages/core).
+### Chrome
 
-Before you can get started with using Ruffle on your website, you must host its files yourself.
-Either take the [latest build](https://github.com/ruffle-rs/ruffle/releases)
-or [build it yourself](https://github.com/ruffle-rs/ruffle/blob/master/web/README.md), and make these files accessible by your web server.
+These instructions also apply to Chromium-based browsers such as Edge, Opera and Brave.
 
-Please note that the `.wasm` file must be served properly, and some web servers may not do that
-correctly out of the box. Please see [our wiki](https://github.com/ruffle-rs/ruffle/wiki/Using-Ruffle#configure-wasm-mime-type)
-for instructions on how to configure this, if you encounter a `Incorrect response MIME type` error.
+- Navigate to `chrome://extensions/`.
+- Turn on Developer mode in the top-right corner.
+- Drag and drop the `*-extension.zip` file into the page.
 
-### "Plug and Play"
+Alternatively, loading unpacked can save time during development:
 
-If you have an existing website with flash content, you can simply include Ruffle as a script and
-our polyfill magic will replace everything for you. No fuss, no mess.
+- Navigate to `chrome://extensions/`.
+- Turn on Developer mode in the top-right corner.
+- Click "Load unpacked".
+- Select the `assets/` folder.
+- Each time after making changes, click the reload icon.
 
-```html
-<script src="path/to/ruffle/ruffle.js"></script>
-```
+### Firefox (Developer Edition or Nightly)
 
-### Javascript API
+- Navigate to `about:addons`.
+- Click the gear and select "Install Add-on From File...".
+- Select the `.xpi` file.
 
-If you want to control the Ruffle player, you may use our Javascript API.
+### Safari
 
-```html
-<script>
-    window.RufflePlayer = window.RufflePlayer || {};
-
-    window.addEventListener("DOMContentLoaded", () => {
-        let ruffle = window.RufflePlayer.newest();
-        let player = ruffle.createPlayer();
-        let container = document.getElementById("container");
-        container.appendChild(player);
-        player.load("movie.swf");
-    });
-</script>
-<script src="path/to/ruffle/ruffle.js"></script>
-```
+- Unzip the `*-extension.zip` file.
+- Run `xcrun safari-web-extension-converter path/to/unzipped_folder/`
+- Click "Run on Xcode".
+- Enable `Safari > Preferences > Advanced > Show Develop menu in menu bar`.
+- Enable `Develop > Allow Unsigned Extensions`.
+- Enable the extension by checking the box in `Safari > Preferences > Extensions`.
 
 ## Building, testing or contributing
 
-Please see [the ruffle-web README](https://github.com/ruffle-rs/ruffle/blob/master/web/README.md).
+Please see the [ruffle-web README](../../README.md).
