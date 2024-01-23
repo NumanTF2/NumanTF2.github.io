@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }}</title>
 
-  <!-- Include Ruffle Library -->
-  <script src="https://cdn.ruffle.rs/latest/ruffle.js"></script>
+  <!-- Include Local Ruffle Library -->
+  <script src="/_ruffle/ruffle.js"></script>
 </head>
 <body>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }}</title>
 
-  <!-- Include Ruffle Library -->
-  <script src="https://cdn.ruffle.rs/latest/ruffle.js"></script>
+  {{ content | replace: '=""', '' | replace: '=\"\"', '' }}
+
 </body>
 </html>
