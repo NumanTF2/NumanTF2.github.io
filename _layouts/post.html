@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }}</title>
 
-  <!-- Include Ruffle Library from CDN -->
-  <script src="https://cdn.ruffle.rs/latest/ruffle.js"></script>
-</head>
-<body>
+window.RufflePlayer = window.RufflePlayer || {};
+window.RufflePlayer.config = {
+    "autoplay": "on", 
+    "splashscreen": false, 
+    "unmuteOverlay": "hidden",
+};
+
 
   {{ content | replace: '=""', '' | replace: '=\"\"', '' }}
 
