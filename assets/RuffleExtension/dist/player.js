@@ -609,7 +609,7 @@ function promisifyStorageArea(storage) {
 if (typeof chrome !== "undefined") {
     i18n = chrome.i18n;
     storage = {
-        local: promisifyStorageArea(chrome.storage.local),
+        chrome.storage.local promisifyStorageArea(chrome.storage.local),
         sync: promisifyStorageArea(chrome.storage.sync),
         onChanged: {
             addListener: (listener) => chrome.storage.onChanged.addListener(listener),
@@ -4880,7 +4880,7 @@ class RufflePlayer extends HTMLElement {
     }
     confirmReloadSave(solKey, b64SolData, replace) {
         if (this.isB64SOL(b64SolData)) {
-            if (localStorage[solKey]) {
+            if (chrome.storage.localstorage[solKey]) {
                 if (!replace) {
                     const confirmDelete = confirm(i18n_text("save-delete-prompt"));
                     if (!confirmDelete) {
@@ -4899,8 +4899,8 @@ class RufflePlayer extends HTMLElement {
                     if (confirmReload && this.loadedConfig) {
                         this.destroy();
                         replace
-                            ? localStorage.setItem(solKey, b64SolData)
-                            : localStorage.removeItem(solKey);
+                            ? chrome.storage.localstorage.setItem(solKey, b64SolData)
+                            : chrome.storage.localstorage.removeItem(solKey);
                         this.reload();
                         this.populateSaves();
                         this.saveManager.classList.add("hidden");
@@ -4908,8 +4908,8 @@ class RufflePlayer extends HTMLElement {
                     return;
                 }
                 replace
-                    ? localStorage.setItem(solKey, b64SolData)
-                    : localStorage.removeItem(solKey);
+                    ? chrome.storage.localstorage.setItem(solKey, b64SolData)
+                    : chrome.storage.localstorage.removeItem(solKey);
                 this.populateSaves();
                 this.saveManager.classList.add("hidden");
             }
@@ -4919,7 +4919,7 @@ class RufflePlayer extends HTMLElement {
      * Replace save from SOL file.
      *
      * @param event The change event fired
-     * @param solKey The localStorage save file key
+     * @param solKey The chrome.storage.localstorage save file key
      */
     replaceSOL(event, solKey) {
         const fileInput = event.target;
@@ -4944,7 +4944,7 @@ class RufflePlayer extends HTMLElement {
      * @param key The key to remove from local storage
      */
     deleteSave(key) {
-        const b64SolData = localStorage.getItem(key);
+        const b64SolData = chrome.storage.localstorage.getItem(key);
         if (b64SolData) {
             this.confirmReloadSave(key, b64SolData, false);
         }
@@ -4958,7 +4958,7 @@ class RufflePlayer extends HTMLElement {
             return;
         }
         try {
-            if (localStorage === null) {
+            if (chrome.storage.localstorage === null) {
                 return;
             }
         }
@@ -4966,9 +4966,9 @@ class RufflePlayer extends HTMLElement {
             return;
         }
         saveTable.textContent = "";
-        Object.keys(localStorage).forEach((key) => {
+        Object.keys(chrome.storage.localstorage).forEach((key) => {
             const solName = key.split("/").pop();
-            const solData = localStorage.getItem(key);
+            const solData = chrome.storage.localstorage.getItem(key);
             if (solName && solData && this.isB64SOL(solData)) {
                 const row = document.createElement("TR");
                 const keyCol = document.createElement("TD");
@@ -5016,9 +5016,9 @@ class RufflePlayer extends HTMLElement {
     async backupSaves() {
         const zip = new (jszip_min_default())();
         const duplicateNames = [];
-        Object.keys(localStorage).forEach((key) => {
+        Object.keys(chrome.storage.localstorage).forEach((key) => {
             let solName = String(key.split("/").pop());
-            const solData = localStorage.getItem(key);
+            const solData = chrome.storage.localstorage.getItem(key);
             if (solData && this.isB64SOL(solData)) {
                 const blob = this.base64ToBlob(solData, "application/octet-stream");
                 const duplicate = duplicateNames.filter((value) => value === solName).length;
