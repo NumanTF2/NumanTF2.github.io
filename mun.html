@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming MUNs in Lahore</title>
+</head>
+<body>
+    <h1>Upcoming MUN Events in Lahore</h1>
+
+    <ul>
+        {% for event in upcoming_muns %}
+        <li>
+            <strong>Username:</strong> {{ event.username }}<br>
+            <strong>Bio:</strong> {{ event.bio }}<br>
+            <strong>Event Date:</strong> {{ event.date }}<br>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
